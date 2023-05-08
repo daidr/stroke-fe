@@ -46,22 +46,22 @@ import { RouterLink } from 'vue-router'
       @apply flex items-center justify-between;
 
       a {
-        @apply text-primary;
+        @apply text-dark/70;
       }
     }
 
     input {
       @apply px-3 py-2 text-lg;
-      @apply border-0 ring-1 ring-primary rounded-md outline-none;
+      @apply border-0 ring-1 ring-dark/70 rounded-md outline-none;
     }
 
     .login-btn {
       @apply px-3 py-2;
-      @apply border-0 ring-1 ring-primary rounded-md text-primary;
+      @apply border-0 ring-1 ring-dark/70 rounded-md text-dark/70;
       @apply cursor-pointer;
       @apply transition;
       &:hover {
-        @apply bg-primary text-white;
+        @apply bg-dark/70 text-white;
       }
       &:active {
         @apply opacity-80;

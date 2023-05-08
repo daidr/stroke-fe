@@ -1,5 +1,23 @@
-<script setup>
-import { RouterLink } from 'vue-router'
+<script setup lang="ts">
+import { RouterLink, useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { getDoctorJWT } from '@/api/doctor/auth'
+import { setToken } from '@/utils/token'
+const router = useRouter()
+const username = ref('')
+const password = ref('')
+
+const isLoading = ref(false)
+
+const login = async () => {
+  isLoading.value = true
+  const token = await getDoctorJWT(username.value, password.value)
+  if (token) {
+    setToken('doctor', token)
+    router.push('/home')
+  }
+  isLoading.value = false
+}
 </script>
 
 <template>
@@ -8,12 +26,12 @@ import { RouterLink } from 'vue-router'
       <div class="logo"></div>
       <span class="logo-text"> Stroke </span>
     </div>
-    <div class="form">
-      <input type="text" placeholder="账号" />
-      <input type="password" placeholder="密码" />
+    <div class="form" :class="{ loading: isLoading }">
+      <input v-model="username" type="text" placeholder="账号" />
+      <input v-model="password" type="password" placeholder="密码" />
       <div class="actions">
         <RouterLink to="/reg">前往注册</RouterLink>
-        <div class="login-btn">登录</div>
+        <div class="login-btn" @click="login">登录</div>
       </div>
     </div>
   </div>
@@ -45,26 +63,30 @@ import { RouterLink } from 'vue-router'
       @apply flex items-center justify-between;
 
       a {
-        @apply text-primary;
+        @apply text-dark/70;
       }
     }
 
     input {
       @apply px-3 py-2 text-lg;
-      @apply border-0 ring-1 ring-primary rounded-md outline-none;
+      @apply border-0 ring-1 ring-dark/70 rounded-md outline-none;
     }
 
     .login-btn {
       @apply px-3 py-2;
-      @apply border-0 ring-1 ring-primary rounded-md text-primary;
+      @apply border-0 ring-1 ring-dark/70 rounded-md text-dark/70;
       @apply cursor-pointer;
       @apply transition;
       &:hover {
-        @apply bg-primary text-white;
+        @apply bg-dark/70 text-white;
       }
       &:active {
         @apply opacity-80;
       }
+    }
+
+    &.loading {
+      @apply opacity-50 pointer-events-none;
     }
   }
 }
