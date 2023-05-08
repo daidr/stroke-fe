@@ -58,7 +58,7 @@ const changeMessageText = (id: string, text: string) => {
 }
 
 const suger = {
-  success: (text: string, duration: number) => {
+  success: (text: string, duration?: number) => {
     return showMessage({
       text,
       icon: 'success',
