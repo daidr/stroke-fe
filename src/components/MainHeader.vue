@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useUserStore } from '@/stores/user'
+import { useDoctorStore } from '@/stores/doctor'
 import { ref } from 'vue'
-const { isLoggedIn, user } = useUserStore()
+const doctorStore = useDoctorStore()
 
 const isPopoverShown = ref(false)
 
@@ -26,9 +26,9 @@ const onPointerLeave = () => {
       <span class="logo-text">Stroke</span>
     </div>
 
-    <div v-if="isLoggedIn" class="user-info">
+    <div v-if="doctorStore.isLoggedIn" class="user-info">
       <div class="user-popover">
-        <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{ user.name }}</span>
+        <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{ doctorStore.doctor.name }}</span>
         <transition
           enter-active-class="transition duration-200 ease-out"
           enter-from-class="translate-y-1 opacity-0"
@@ -44,9 +44,9 @@ const onPointerLeave = () => {
             @pointerleave="onPointerLeave"
           >
             <div class="flex flex-col space-y-2 p-2">
-              <div>用户名：{{ user.name }}</div>
-              <div>ID：{{ user.id }}</div>
-              <div class="logout-btn">
+              <div>用户名：{{ doctorStore.doctor.username }}</div>
+              <div>ID：{{ doctorStore.doctor.id }}</div>
+              <div class="logout-btn" @click="doctorStore.logout">
                 <div class="i-mingcute-align-arrow-left-line"></div>
                 退出登录
               </div>
