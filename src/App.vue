@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
+import MainHeader from '@/components/MainHeader.vue'
 
 const route = useRoute()
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-    </div>
-  </header>
-
+  <MainHeader v-if="!route.meta.hideHeader" />
   <RouterView />
 </template>
 
