@@ -27,7 +27,7 @@ const login = async () => {
       <span class="logo-text"> Stroke </span>
     </div>
     <div class="form" :class="{ loading: isLoading }">
-      <input v-model="username" type="text" placeholder="账号" />
+      <input v-model="username" type="text" placeholder="用户名" />
       <input v-model="password" type="password" placeholder="密码" />
       <div class="actions">
         <RouterLink to="/reg">前往注册</RouterLink>
