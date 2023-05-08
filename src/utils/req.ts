@@ -26,11 +26,12 @@ instance.interceptors.response.use(
     }
   },
   (err) => {
-    if (err.status === 401) {
+    if (err.response.status === 401) {
       error('未授权的操作，请尝试重新登录')
       location.href = '/login'
       return Promise.reject(err)
     }
+    error(err.response.statusText)
     console.log(err.response)
     return Promise.reject(err)
   }
