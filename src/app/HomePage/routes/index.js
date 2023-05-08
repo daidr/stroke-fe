@@ -4,7 +4,8 @@ export const routes = [
     component: () => import('../HomePage.vue'),
     meta: {
       pageTitle: '诊断列表',
-      hideHeader: false
+      hideHeader: false,
+      authType: 'doctor'
     }
   }
 ]
