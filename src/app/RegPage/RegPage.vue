@@ -1,5 +1,32 @@
-<script setup>
-import { RouterLink } from 'vue-router'
+<script setup lang="ts">
+import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { regDoctor } from '@/api/doctor/auth'
+import { useMessage } from '@/components/Message'
+const router = useRouter()
+const name = ref('')
+const username = ref('')
+const password = ref('')
+const rpassword = ref('')
+const id = ref()
+
+const isLoading = ref(false)
+
+const message = useMessage()
+
+const reg = async () => {
+  if (password.value !== rpassword.value) {
+    message.error('两次密码不一致')
+    return
+  }
+  isLoading.value = true
+  const result = await regDoctor(username.value, password.value, name.value, id.value)
+  if (result) {
+    message.success('注册完成，请联系管理员激活后登录')
+    router.push('/login')
+  }
+  isLoading.value = false
+}
 </script>
 
 <template>
@@ -9,12 +36,14 @@ import { RouterLink } from 'vue-router'
       <span class="logo-text"> Stroke </span>
     </div>
     <div class="form">
-      <input type="text" placeholder="账号" />
-      <input type="password" placeholder="密码" />
-      <input type="password" placeholder="重复密码" />
+      <input v-model="username" type="text" placeholder="用户名" />
+      <input v-model="name" type="text" placeholder="姓名" />
+      <input v-model="id" type="text" placeholder="ID" />
+      <input v-model="password" type="password" placeholder="密码" />
+      <input v-model="rpassword" type="password" placeholder="重复密码" />
       <div class="actions">
         <RouterLink to="/login">前往登录</RouterLink>
-        <div class="login-btn">注册</div>
+        <div class="reg-btn" @click="reg">注册</div>
       </div>
     </div>
   </div>
@@ -55,7 +84,7 @@ import { RouterLink } from 'vue-router'
       @apply border-0 ring-1 ring-dark/70 rounded-md outline-none;
     }
 
-    .login-btn {
+    .reg-btn {
       @apply px-3 py-2;
       @apply border-0 ring-1 ring-dark/70 rounded-md text-dark/70;
       @apply cursor-pointer;
