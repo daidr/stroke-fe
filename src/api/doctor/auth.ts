@@ -1,5 +1,21 @@
 import { ApiGet, ApiPost } from '@/utils/req'
 
+const regDoctor = async (username: string, password: string, name: string, id: number) => {
+  return await ApiPost(`/api/doctor/register`, {
+    username,
+    password,
+    name,
+    id: id - 0
+  })
+    .then(() => {
+      return true
+    })
+    .catch((err) => {
+      console.log(err)
+      return false as false
+    })
+}
+
 const getDoctorJWT = async (username: string, password: string) => {
   return await ApiPost(`/api/doctor/login`, {
     username,
@@ -33,4 +49,4 @@ const getDoctorInfo = async () => {
     })
 }
 
-export { getDoctorJWT, getDoctorInfo }
+export { getDoctorJWT, getDoctorInfo, regDoctor }
