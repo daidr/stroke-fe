@@ -36,9 +36,9 @@ const changepw = async () => {
 <template>
   <div class="changepw-wrapper">
     <div class="form" :class="{ loading: isLoading }">
-      <input v-model="oldPassword" type="current-password" placeholder="现在的密码" />
-      <input v-model="newPassword" type="new-password" placeholder="新密码" />
-      <input v-model="repeatPassword" type="repeat-password" placeholder="重复新密码" />
+      <input v-model="oldPassword" type="password" autocomplete="current-password" placeholder="现在的密码" />
+      <input v-model="newPassword" type="password" autocomplete="new-password" placeholder="新密码" />
+      <input v-model="repeatPassword" type="password" autocomplete="repeat-password" placeholder="重复新密码" />
       <div class="actions">
         <div class="changepw-btn" @click="changepw">修改密码</div>
       </div>
