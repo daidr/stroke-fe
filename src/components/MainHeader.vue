@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDoctorStore } from '@/stores/doctor'
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 const doctorStore = useDoctorStore()
 
 const isPopoverShown = ref(false)
@@ -46,7 +47,11 @@ const onPointerLeave = () => {
             <div class="flex flex-col space-y-2 p-2">
               <div>用户名：{{ doctorStore.doctor.username }}</div>
               <div>ID：{{ doctorStore.doctor.id }}</div>
-              <div class="logout-btn" @click="doctorStore.logout">
+              <RouterLink class="btn" to="/changepw">
+                <div class="i-mingcute-key-2-line"></div>
+                修改密码
+              </RouterLink>
+              <div class="btn" @click="doctorStore.logout">
                 <div class="i-mingcute-align-arrow-left-line"></div>
                 退出登录
               </div>
@@ -81,8 +86,8 @@ header {
       @apply absolute z-10 top-8 right-0 whitespace-nowrap min-w-40;
       @apply bg-white ring-1 ring-zinc/50 shadow-lg shadow-black/10 rounded-md;
 
-      .logout-btn {
-        @apply py-1 select-none cursor-pointer;
+      .btn {
+        @apply py-1 select-none cursor-pointer color-black decoration-none;
         @apply flex items-center justify-center;
         @apply rounded-md;
         @apply transition;
