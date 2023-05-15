@@ -49,4 +49,18 @@ const getDoctorInfo = async () => {
     })
 }
 
+export const changeDoctorPassword = async (oldPassword: string, newPassword: string) => {
+  return await ApiPost(`/api/doctor/reset`,{
+    old_password: oldPassword,
+    new_password: newPassword
+  })
+    .then(() => {
+      return true
+    })
+    .catch((err) => {
+      console.log(err)
+      return false as false
+    })
+}
+
 export { getDoctorJWT, getDoctorInfo, regDoctor }
