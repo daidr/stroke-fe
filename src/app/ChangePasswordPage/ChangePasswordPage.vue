@@ -65,22 +65,23 @@ const changepw = async () => {
       @apply flex items-center justify-between;
 
       a {
-        @apply text-dark/70;
+        @apply text-black/70 dark:text-white/70;
       }
     }
 
     input {
-      @apply px-3 py-2 text-lg;
-      @apply border-0 ring-1 ring-dark/70 rounded-md outline-none;
+      @apply px-3 py-2 text-lg bg-transparent;
+      @apply border-0 ring-1 ring-black/70 dark:ring-white/70 rounded-md outline-none;
     }
 
     .changepw-btn {
       @apply px-3 py-2;
-      @apply border-0 ring-1 ring-dark/70 rounded-md text-dark/70;
+      @apply border-0 ring-1 ring-dark/70 dark:ring-white/70 rounded-md text-black/70 dark:text-white/70;
       @apply cursor-pointer;
       @apply transition;
       &:hover {
-        @apply bg-dark/70 text-white;
+        @apply bg-black/70 text-white;
+        @apply dark:(bg-white/70 text-black);
       }
       &:active {
         @apply opacity-80;
