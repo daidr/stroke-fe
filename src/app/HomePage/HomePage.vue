@@ -7,6 +7,7 @@ import {
   type IDoctorPatientItem
 } from '@/api/doctor/related'
 import { useMessage } from '@/components/Message'
+import DiagnosisItem from '@/components/DiagnosisItem.vue'
 import { getDoctorPatientById } from '@/api/doctor/related'
 import { getGenderString } from '@/utils/_'
 
@@ -90,27 +91,15 @@ onMounted(() => {
             </div>
             <div ref="list1" class="clist">
               <template v-for="item in diagnosisList" :key="item.id">
-                <div
+                <DiagnosisItem
                   class="clist-item"
                   :class="{
                     selected: selectedPatient === item.patient_id
                   }"
                   @click="() => (selectedPatient = item.patient_id)"
-                >
-                  <div class="flex">
-                    <div class="flex-grow">
-                      <div class="text-sm pb-2 text-black/30">
-                        {{ new Date(item.diagnosis_date).toLocaleDateString() }}
-                      </div>
-                      <div class="name">姓名：{{ patientsMap[item.patient_id].name }}</div>
-                      <div class="date">诊断ID：{{ item.id }}</div>
-                    </div>
-                    <div class="flex-shrink-0 flex items-center">
-                      <div class="rounded-md text-sm px-1 mr-1 text-white bg-red">严重</div>
-                      <div class="text-black/40 text-sm">出血性脑卒中</div>
-                    </div>
-                  </div>
-                </div>
+                  :name="patientsMap[item.patient_id].name"
+                  :item="item"
+                />
               </template>
             </div>
           </div>
@@ -147,20 +136,7 @@ onMounted(() => {
             <div ref="list2" class="clist">
               <template v-for="index of 100" :key="index">
                 <template v-for="item in patientsMap[selectedPatient].diagnosis" :key="item.id">
-                  <div class="clist-item">
-                    <div class="flex">
-                      <div class="flex-grow">
-                        <div class="text-sm pb-2 text-black/30">
-                          {{ new Date(item.diagnosis_date).toLocaleDateString() }}
-                        </div>
-                        <div class="date">诊断ID：{{ item.id }}</div>
-                      </div>
-                      <div class="flex-shrink-0 flex items-center">
-                        <div class="rounded-md text-sm px-1 mr-1 text-white bg-red">严重</div>
-                        <div class="text-black/40 text-sm">出血性脑卒中</div>
-                      </div>
-                    </div>
-                  </div>
+                  <DiagnosisItem class="clist-item" :item="item" />
                 </template>
               </template>
             </div>
