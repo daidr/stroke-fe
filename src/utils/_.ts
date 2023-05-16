@@ -38,7 +38,7 @@ export const getStrokeLevelColor = (strokeLevel: number) => {
     case 1:
       return 'bg-yellow-500'
     case 2:
-      return 'bg-orange-400'
+      return 'bg-orange-500'
     case 3:
       return 'bg-red-700'
     default:
