@@ -5,5 +5,11 @@
             "src": "/api/(.*)",
             "dest": "http://cloud.liki4.icu:39999"
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/:path*",
+            "destination": "/index.html"
+        }
     ]
 }
