@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://cloud.liki4.icu:39999',
+        target: 'http://cloud.liki4.icu:39999/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

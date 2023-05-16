@@ -12,7 +12,7 @@ export interface IDoctorDiagnosisItem {
 export type IDoctorDiagnosisList = IDoctorDiagnosisItem[]
 
 export const getDoctorDiagnosisList = async () => {
-  return await ApiGet(`/api/doctor/diagnosis`)
+  return await ApiGet(`/doctor/diagnosis`)
     .then((res) => {
       return res.data as IDoctorDiagnosisList
     })
@@ -30,7 +30,7 @@ export interface IDoctorPatientItem {
 }
 
 export const getDoctorPatientById = async (id: number) => {
-  return await ApiGet(`/api/doctor/patient/${id}`)
+  return await ApiGet(`/doctor/patient/${id}`)
     .then((res) => {
       return res.data as IDoctorPatientItem
     })

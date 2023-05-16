@@ -17,7 +17,7 @@ export const regDoctor = async (username: string, password: string, name: string
 }
 
 export const getDoctorJWT = async (username: string, password: string) => {
-  return await ApiPost(`/api/doctor/login`, {
+  return await ApiPost(`/doctor/login`, {
     username,
     password
   })
@@ -39,7 +39,7 @@ interface IDoctorInfo {
 }
 
 export const getDoctorInfo = async () => {
-  return await ApiGet(`/api/doctor/info`)
+  return await ApiGet(`/doctor/info`)
     .then((res) => {
       return res.data as IDoctorInfo
     })
@@ -50,7 +50,7 @@ export const getDoctorInfo = async () => {
 }
 
 export const changeDoctorPassword = async (oldPassword: string, newPassword: string) => {
-  return await ApiPost(`/api/doctor/reset`, {
+  return await ApiPost(`/doctor/reset`, {
     old_password: oldPassword,
     new_password: newPassword
   })
