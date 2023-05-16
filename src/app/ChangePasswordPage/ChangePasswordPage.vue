@@ -14,7 +14,7 @@ const { error, success } = useMessage()
 
 const changepw = async () => {
   if (!oldPassword.value || !newPassword.value || !repeatPassword.value) {
-    error('密码不嫩为空')
+    error('密码不能为空')
     return
   }
   if (newPassword.value != repeatPassword.value) {
