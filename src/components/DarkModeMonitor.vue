@@ -34,13 +34,11 @@ watchEffect(() => {
 function setModeClass(isDark: boolean): void {
   if (isDark) {
     useHead({
-      htmlAttrs: { class: 'dark' },
-      meta: [{ name: 'theme-color', content: '#121212' }]
+      htmlAttrs: { class: 'dark' }
     })
   } else {
     useHead({
-      htmlAttrs: { class: '' },
-      meta: [{ name: 'theme-color', content: '#ffffff' }]
+      htmlAttrs: { class: '' }
     })
   }
 }
