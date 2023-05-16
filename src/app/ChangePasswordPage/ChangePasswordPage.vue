@@ -35,11 +35,13 @@ const changepw = async () => {
 
 <template>
   <div class="changepw-wrapper">
+    <div class="title">修改密码</div>
     <div class="form" :class="{ loading: isLoading }">
       <input v-model="oldPassword" type="password" autocomplete="current-password" placeholder="现在的密码" />
       <input v-model="newPassword" type="password" autocomplete="new-password" placeholder="新密码" />
       <input v-model="repeatPassword" type="password" autocomplete="repeat-password" placeholder="重复新密码" />
       <div class="actions">
+        <div></div>
         <div class="changepw-btn" @click="changepw">修改密码</div>
       </div>
     </div>
@@ -51,6 +53,10 @@ const changepw = async () => {
   @apply fixed top-15 left-0 right-0 bottom-0;
   @apply flex items-center justify-center flex-col;
   @apply space-y-10;
+
+  .title {
+    @apply text-3xl font-light select-none;
+  }
 
   .form {
     @apply flex flex-col space-y-2;
