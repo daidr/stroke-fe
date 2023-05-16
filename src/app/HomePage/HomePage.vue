@@ -88,6 +88,16 @@ onMounted(() => {
           <div class="h-full flex flex-col">
             <div class="title-wrapper" :class="{ 'not-top': y1 > 0 }">
               <div class="title">诊断列表</div>
+              <div
+                class="refresh-btn absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
+                @click="
+                  () => {
+                    fetchDiagnosisList()
+                  }
+                "
+              >
+                <div class="i-mingcute-refresh-2-line text-zinc"></div>
+              </div>
             </div>
             <div ref="list1" class="clist">
               <template v-for="item in diagnosisList" :key="item.id">
@@ -153,13 +163,15 @@ onMounted(() => {
   @apply flex justify-center;
 
   .title-wrapper {
-    @apply w-full h-64px flex items-center transition-all duration-300 flex-shrink-0 select-none;
+    @apply w-full h-64px flex items-center transition duration-300 flex-shrink-0 select-none;
     @apply border-zinc/0 border-b-1 border-b-solid;
     @apply relative;
+    transition-property: font-size, font-weight, border-color, height, left, transform;
 
     .title {
-      @apply text-3xl font-extrabold transition-all duration-300;
+      @apply text-3xl font-extrabold transition duration-300;
       @apply absolute top-1/2 left-5 transform-gpu -translate-y-1/2;
+      transition-property: font-size, font-weight, border-color, height, left, transform;
     }
 
     &.not-top {
