@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.13",
+    "@vueuse/core": "^10.1.2",
+    "@vueuse/head": "^1.1.26",
     "axios": "^1.4.0",
     "pinia": "^2.0.35",
     "vue": "^3.2.47",
