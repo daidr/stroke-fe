@@ -18,5 +18,6 @@ export default defineConfig({
     colors: {
       primary: '#1a73e8'
     }
-  }
+  },
+  safelist: ['bg-yellow-500', 'bg-orange-500', 'bg-red-700', 'bg-gray-400']
 })
