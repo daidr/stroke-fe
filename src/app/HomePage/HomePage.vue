@@ -71,7 +71,7 @@ onMounted(() => {
         </template>
         <template v-else-if="diagnosisList.length == 0">
           <div class="w-full h-full flex justify-center items-center select-none">
-            <span class="text-black/50">无诊断记录</span>
+            <span class="text-black/50 dark:text-white/50">无诊断记录</span>
             <div
               class="refresh-btn"
               @click="
@@ -108,7 +108,7 @@ onMounted(() => {
       <div class="right">
         <template v-if="selectedPatient === -1">
           <div class="w-full h-full flex justify-center items-center">
-            <span class="text-black/50 select-none">请在左侧选择一份报告</span>
+            <span class="text-black/50 dark:text-white/50 select-none">请在左侧选择一份报告</span>
           </div>
         </template>
         <template v-else>
@@ -120,7 +120,7 @@ onMounted(() => {
               <div class="flex flex-col justify-between">
                 <div class="font-bold text-4xl">
                   {{ patientsMap[selectedPatient].name }}
-                  <span class="text-black/40 text-2xl">#{{ selectedPatient }}</span>
+                  <span class="text-black/40 dark:text-white/40 text-2xl">#{{ selectedPatient }}</span>
                 </div>
                 <div class="grid grid-cols-2">
                   <div class="gender">
