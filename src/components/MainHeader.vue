@@ -78,7 +78,7 @@ header {
   @apply flex items-center px-5 justify-between;
 
   .logo-with-text {
-    @apply flex items-center space-x-2 select-none color-black;
+    @apply flex items-center space-x-2 select-none text-black dark:text-white;
     .logo {
       @apply h-10 w-10 bg-gray;
     }
@@ -93,10 +93,10 @@ header {
 
     .user-panel {
       @apply absolute z-10 top-8 right-0 whitespace-nowrap min-w-40;
-      @apply bg-white ring-1 ring-zinc/50 shadow-lg shadow-black/10 rounded-md;
+      @apply bg-white dark:bg-black ring-1 ring-zinc/50 shadow-lg shadow-black/10 rounded-md;
 
       .btn {
-        @apply py-1 select-none cursor-pointer color-black decoration-none;
+        @apply py-1 select-none cursor-pointer text-black dark:text-white decoration-none;
         @apply flex items-center justify-center;
         @apply rounded-md;
         @apply transition;
