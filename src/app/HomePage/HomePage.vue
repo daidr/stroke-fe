@@ -120,7 +120,9 @@ onMounted(() => {
               <div class="flex flex-col justify-between">
                 <div class="font-bold text-4xl">
                   {{ patientsMap[selectedPatient].name }}
-                  <span class="text-black/40 dark:text-white/40 text-2xl">#{{ selectedPatient }}</span>
+                  <span class="text-black/40 dark:text-white/40 text-2xl"
+                    >#{{ selectedPatient }}</span
+                  >
                 </div>
                 <div class="grid grid-cols-2">
                   <div class="gender">
@@ -134,10 +136,8 @@ onMounted(() => {
               <div class="title">{{ patientsMap[selectedPatient].name }} 的历史诊断</div>
             </div>
             <div ref="list2" class="clist">
-              <template v-for="index of 100" :key="index">
-                <template v-for="item in patientsMap[selectedPatient].diagnosis" :key="item.id">
-                  <DiagnosisItem class="clist-item" :item="item" />
-                </template>
+              <template v-for="item in patientsMap[selectedPatient].diagnosis" :key="item.id">
+                <DiagnosisItem class="clist-item" :item="item" />
               </template>
             </div>
           </div>
