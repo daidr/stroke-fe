@@ -2,6 +2,8 @@
 import { useDoctorStore } from '@/stores/doctor'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import DarkModeMonitor from '@/components/DarkModeMonitor.vue'
+
 const doctorStore = useDoctorStore()
 
 const isPopoverShown = ref(false)
@@ -29,40 +31,43 @@ const onPointerLeave = () => {
       </div>
     </RouterLink>
 
-    <div v-if="doctorStore.isLoggedIn" class="user-info">
-      <div class="user-popover">
-        <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
-          doctorStore.doctor.name
-        }}</span>
-        <transition
-          enter-active-class="transition duration-200 ease-out"
-          enter-from-class="translate-y-1 opacity-0"
-          enter-to-class="translate-y-0 opacity-100"
-          leave-active-class="transition duration-150 ease-in"
-          leave-from-class="translate-y-0 opacity-100"
-          leave-to-class="translate-y-1 opacity-0"
-        >
-          <div
-            v-if="isPopoverShown"
-            class="user-panel"
-            @pointerenter="onPointerEnter"
-            @pointerleave="onPointerLeave"
+    <div class="flex items-center space-x-2">
+      <div v-if="doctorStore.isLoggedIn" class="user-info">
+        <div class="user-popover">
+          <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
+            doctorStore.doctor.name
+          }}</span>
+          <transition
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="translate-y-1 opacity-0"
+            enter-to-class="translate-y-0 opacity-100"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="translate-y-0 opacity-100"
+            leave-to-class="translate-y-1 opacity-0"
           >
-            <div class="flex flex-col space-y-2 p-2">
-              <div>用户名：{{ doctorStore.doctor.username }}</div>
-              <div>ID：{{ doctorStore.doctor.id }}</div>
-              <RouterLink class="btn" to="/changepw">
-                <div class="i-mingcute-key-2-line"></div>
-                修改密码
-              </RouterLink>
-              <div class="btn" @click="doctorStore.logout">
-                <div class="i-mingcute-align-arrow-left-line"></div>
-                退出登录
+            <div
+              v-if="isPopoverShown"
+              class="user-panel"
+              @pointerenter="onPointerEnter"
+              @pointerleave="onPointerLeave"
+            >
+              <div class="flex flex-col space-y-2 p-2">
+                <div>用户名：{{ doctorStore.doctor.username }}</div>
+                <div>ID：{{ doctorStore.doctor.id }}</div>
+                <RouterLink class="btn" to="/changepw">
+                  <div class="i-mingcute-key-2-line"></div>
+                  修改密码
+                </RouterLink>
+                <div class="btn" @click="doctorStore.logout">
+                  <div class="i-mingcute-align-arrow-left-line"></div>
+                  退出登录
+                </div>
               </div>
             </div>
-          </div>
-        </transition>
+          </transition>
+        </div>
       </div>
+      <DarkModeMonitor />
     </div>
   </header>
 </template>
