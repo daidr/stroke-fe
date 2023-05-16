@@ -1,12 +1,10 @@
 {
     "version": 2,
-    "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "http://cloud.liki4.icu:39999"
-        }
-    ],
     "rewrites": [
+        {
+            "source": "/api/:path*",
+            "destination": "http://cloud.liki4.icu:39999/api/:path*"
+        },
         {
             "source": "/:path*",
             "destination": "/index.html"
