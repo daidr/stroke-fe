@@ -26,7 +26,7 @@ defineProps({
         <div class="date">诊断ID：{{ item.id }}</div>
       </div>
       <div class="flex-shrink-0 flex items-center">
-        <div class="rounded-md text-sm px-1 mr-1 text-white" :class="[getStrokeLevelColor(item.stroke_level)]">{{ getStrokeLevelString(item.stroke_level) }}</div>
+        <div class="rounded-md text-sm px-1 mr-1 text-white select-none" :class="[getStrokeLevelColor(item.stroke_level)]">{{ getStrokeLevelString(item.stroke_level) }}</div>
         <div class="text-black/40 dark:text-white/40 text-sm">{{ getStrokeTypeString(item.stroke_type) }}</div>
       </div>
     </div>
