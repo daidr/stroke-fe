@@ -56,7 +56,7 @@ defineProps({
 <style lang="scss" scoped>
 .message-item {
   @apply transition-all;
-  @apply bg-white text-dark/60 rounded-full px-3 py-1;
+  @apply bg-white text-dark/60 rounded-full px-3 py-1 dark:(bg-black text-white/60);
   @apply ring-1 ring-zinc/20;
   @apply shadow-xl shadow-zinc/10;
   @apply select-none;
