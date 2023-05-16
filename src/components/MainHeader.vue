@@ -22,14 +22,18 @@ const onPointerLeave = () => {
 
 <template>
   <header>
-    <div class="logo-with-text">
-      <div class="logo"></div>
-      <span class="logo-text">Stroke</span>
-    </div>
+    <RouterLink to="/" class="decoration-none">
+      <div class="logo-with-text">
+        <div class="logo"></div>
+        <span class="logo-text">Stroke</span>
+      </div>
+    </RouterLink>
 
     <div v-if="doctorStore.isLoggedIn" class="user-info">
       <div class="user-popover">
-        <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{ doctorStore.doctor.name }}</span>
+        <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
+          doctorStore.doctor.name
+        }}</span>
         <transition
           enter-active-class="transition duration-200 ease-out"
           enter-from-class="translate-y-1 opacity-0"
@@ -69,7 +73,7 @@ header {
   @apply flex items-center px-5 justify-between;
 
   .logo-with-text {
-    @apply flex items-center space-x-2;
+    @apply flex items-center space-x-2 select-none color-black;
     .logo {
       @apply h-10 w-10 bg-gray;
     }
