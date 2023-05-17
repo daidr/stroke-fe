@@ -1,4 +1,5 @@
 import './assets/main.css'
+import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css'
 import { createHead } from '@vueuse/head'
 import { createApp } from 'vue'

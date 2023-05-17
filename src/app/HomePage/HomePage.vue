@@ -147,7 +147,13 @@ onMounted(() => {
             </div>
             <div ref="list2" class="clist">
               <template v-for="item in patientsMap[selectedPatient].diagnosis" :key="item.id">
-                <DiagnosisItem class="clist-item" :item="item" />
+                <RouterLink :to="{ name: 'diagnosis', params: { id: item.id } }">
+                  <DiagnosisItem
+                    class="clist-item"
+                    :name="patientsMap[selectedPatient].name"
+                    :item="item"
+                  />
+                </RouterLink>
               </template>
             </div>
           </div>
