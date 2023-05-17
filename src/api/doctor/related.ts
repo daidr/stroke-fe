@@ -39,3 +39,38 @@ export const getDoctorPatientById = async (id: number) => {
       return false as false
     })
 }
+
+export interface IDoctorDiagnosisRecordItem {
+  id: number
+  diagnosis_id: number
+  record_date: string
+  image_source: string
+  main_vessel_ratio_x: number
+  general_vessel_ratio_y: number
+  tiny_vessel_ratio_z: number
+  ischemic_area_v: number
+  vessel_density_p: number
+}
+
+export interface IDoctorDiagnosisPlanItem {
+  id: number
+  name: string
+  diagnosis_id: string
+  effection: number
+}
+
+export interface IDoctorDiagnosisDetailsItem {
+  records: IDoctorDiagnosisRecordItem[]
+  plans: IDoctorDiagnosisPlanItem[]
+}
+
+export const getDoctorDiagnosisDetailsById = async (id: number) => {
+  return await ApiGet(`/doctor/diagnosis/${id}`)
+    .then((res) => {
+      return res.data as IDoctorDiagnosisDetailsItem
+    })
+    .catch((err) => {
+      console.log(err)
+      return false as false
+    })
+}
