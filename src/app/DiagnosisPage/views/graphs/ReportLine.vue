@@ -86,7 +86,7 @@ const option = computed(() => {
           inside: true
         },
         splitLine: {
-          show: true
+          show: false
         },
         axisLabel: {
           inside: true,
