@@ -9,9 +9,10 @@ import {
 import { useMessage } from '@/components/Message'
 import PatientDetails from './views/PatientDetails.vue'
 import { useRoute } from 'vue-router'
+import ReportImageBox from './views/ReportImageBox.vue'
 
 const { error, success } = useMessage()
-const isFetching = ref(false)
+const isFetching = ref(true)
 const route = useRoute()
 
 const diagnosisDetails = ref({} as IDoctorDiagnosisDetailsItem)
@@ -25,24 +26,22 @@ const fetchInfos = async () => {
     return
   }
   isFetching.value = true
-  await getDoctorDiagnosisDetailsById(id).then((res) => {
-    if (!res) {
-      error('获取诊断记录失败')
-    } else {
-      diagnosisDetails.value = res
-      success('获取诊断记录成功')
-    }
-  })
+  let _res1 = await getDoctorDiagnosisDetailsById(id)
 
-  await getDoctorPatientById(pid).then((res) => {
-    if (!res) {
-      error('获取患者信息失败')
-    } else {
-      patientInfo.value = res
-      success('获取患者信息成功')
-    }
-  })
+  if (!_res1) {
+    error('获取诊断记录失败')
+  } else {
+    diagnosisDetails.value = _res1
+    // success('获取诊断记录成功')
+  }
 
+  let _res2 = await getDoctorPatientById(pid)
+  if (!_res2) {
+    error('获取患者信息失败')
+  } else {
+    patientInfo.value = _res2
+    // success('获取患者信息成功')
+  }
   isFetching.value = false
 }
 
@@ -51,6 +50,8 @@ const currentDiagnosis = computed(() => {
     (item) => item.id === parseInt(route.params.id as string)
   )
 })
+
+const currentRecordId = ref(-1)
 
 onMounted(() => {
   fetchInfos()
@@ -75,8 +76,14 @@ onMounted(() => {
           :stroke-level="currentDiagnosis?.stroke_level"
           :stroke-type="currentDiagnosis?.stroke_type"
           :date="currentDiagnosis?.diagnosis_date"
-      />
-    </template>
+        />
+        <!-- 图片预览器 -->
+        <ReportImageBox
+          class="col-span-19 row-span-12"
+          :records="diagnosisDetails.records"
+          :current-record-id="currentRecordId"
+        />
+      </template>
     </div>
   </div>
 </template>
