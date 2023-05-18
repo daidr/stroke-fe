@@ -74,3 +74,22 @@ export const getDoctorDiagnosisDetailsById = async (id: number) => {
       return false as false
     })
 }
+
+export interface IDoctorPlanTreatmentsItem {
+  id: number
+  plan_id: number
+  treatment_date: string
+  ischemic_area_v: number
+  vessel_density_p: number
+}
+
+export const getDoctorPlanTreatmentsById = async (id: number) => {
+  return await ApiGet(`/doctor/plan/${id}`)
+    .then((res) => {
+      return res.data.treatments as IDoctorPlanTreatmentsItem[]
+    })
+    .catch((err) => {
+      console.log(err)
+      return false as false
+    })
+}
