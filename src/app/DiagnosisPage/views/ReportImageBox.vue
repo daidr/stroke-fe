@@ -5,17 +5,8 @@ import { reactive, ref, watch } from 'vue'
 const props = defineProps<{
   records: IDoctorDiagnosisRecordItem[]
   currentRecordId: number
+  setCurrentRecordId: (id: number) => void
 }>()
-
-const _currentRecordId = ref(-1)
-
-watch(
-  () => props.currentRecordId,
-  (val: number) => {
-    _currentRecordId.value = val
-  },
-  { immediate: true }
-)
 
 const getRecordImage = (url: string) => {
   if (url === 'https://www.baidu.com/') {
@@ -45,7 +36,6 @@ const randomInt = (min: number, max: number) => {
 const onImageLoaded = (event: Event, recordId: number) => {
   const ContainerWidth = (ImageContainerRef.value as HTMLDivElement).offsetWidth
   const ContainerHeight = (ImageContainerRef.value as HTMLDivElement).offsetHeight
-  console.log(ContainerWidth, ContainerHeight)
   const imageWidth = (event.target as HTMLImageElement).width
   const imageHeight = (event.target as HTMLImageElement).height
   recordImageSize[recordId] = [imageWidth, imageHeight]
@@ -57,8 +47,6 @@ const onImageLoaded = (event: Event, recordId: number) => {
 
   const x = randomInt(minX, maxX)
   const y = randomInt(minY, maxY)
-
-  console.log(x, y)
 
   recordImagePos[recordId] = [x, y]
 }
@@ -90,7 +78,7 @@ const onPointerMove = (e: PointerEvent, recordId: number) => {
 const onMouseDown = (recordId: number) => {
   window.removeEventListener('mouseup', onMouseUp)
   window.removeEventListener('pointermove', _tempEventFunction)
-  _currentRecordId.value = recordId
+  props.setCurrentRecordId(recordId)
   isMouseDown.value = true
   window.addEventListener('mouseup', onMouseUp)
   _tempEventFunction = (e: PointerEvent) => onPointerMove(e, recordId)
@@ -111,7 +99,7 @@ const onMouseDown = (recordId: number) => {
           }"
           v-viewer.static="{ inline: false }"
           :class="{
-            current: _currentRecordId === record.id
+            current: currentRecordId === record.id
           }"
         >
           <div class="inner">

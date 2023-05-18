@@ -3,13 +3,17 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import {
   getDoctorDiagnosisDetailsById,
   getDoctorPatientById,
+  getDoctorPlanTreatmentsById,
   type IDoctorDiagnosisDetailsItem,
-  type IDoctorPatientItem
+  type IDoctorDiagnosisPlanItem,
+  type IDoctorPatientItem,
+  type IDoctorPlanTreatmentsItem
 } from '@/api/doctor/related'
 import { useMessage } from '@/components/Message'
 import PatientDetails from './views/PatientDetails.vue'
 import { useRoute } from 'vue-router'
 import ReportImageBox from './views/ReportImageBox.vue'
+import ReportDataBox from './views/ReportDataBox.vue'
 
 const { error, success } = useMessage()
 const isFetching = ref(true)
@@ -17,6 +21,20 @@ const route = useRoute()
 
 const diagnosisDetails = ref({} as IDoctorDiagnosisDetailsItem)
 const patientInfo = ref({} as IDoctorPatientItem)
+const plansInfo = reactive(
+  {} as Record<
+    number,
+    {
+      plan: IDoctorDiagnosisPlanItem
+      treatments: IDoctorPlanTreatmentsItem[]
+    }
+  >
+)
+
+const currentRecordId = ref(-1)
+const setCurrentRecordId = (id: number) => {
+  currentRecordId.value = id
+}
 
 const fetchInfos = async () => {
   const id = parseInt(route.params.id as string)
@@ -42,6 +60,20 @@ const fetchInfos = async () => {
     patientInfo.value = _res2
     // success('获取患者信息成功')
   }
+
+  for (let plan of diagnosisDetails.value.plans) {
+    let _res3 = await getDoctorPlanTreatmentsById(plan.id)
+    if (!_res3) {
+      error('获取治疗方案失败')
+    } else {
+      plansInfo[plan.id] = {
+        plan,
+        treatments: _res3
+      }
+      // success('获取治疗方案成功')
+    }
+  }
+  setCurrentRecordId(diagnosisDetails.value.records[0].id)
   isFetching.value = false
 }
 
@@ -51,7 +83,7 @@ const currentDiagnosis = computed(() => {
   )
 })
 
-const currentRecordId = ref(-1)
+
 
 onMounted(() => {
   fetchInfos()
@@ -82,6 +114,15 @@ onMounted(() => {
           class="col-span-19 row-span-12"
           :records="diagnosisDetails.records"
           :current-record-id="currentRecordId"
+          :set-current-record-id="setCurrentRecordId"
+        />
+        <!-- 血管参数专业分析 -->
+        <ReportDataBox
+          class="col-span-19 row-span-12"
+          :records="diagnosisDetails.records"
+          :plans="plansInfo"
+          :current-record-id="currentRecordId"
+          :set-current-record-id="setCurrentRecordId"
         />
       </template>
     </div>
