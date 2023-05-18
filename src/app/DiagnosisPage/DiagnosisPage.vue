@@ -60,15 +60,23 @@ onMounted(() => {
 <template>
   <div class="diagnosis-wrapper">
     <div class="limit-view">
-      <!-- 诊断详情 -->
-      <PatientDetails
-        class="col-span-5 row-span-full"
-        :name="patientInfo.name"
-        :age="patientInfo.age"
-        :gender="patientInfo.sex"
-        :stroke-level="currentDiagnosis?.stroke_level"
-        :stroke-type="currentDiagnosis?.stroke_type"
+      <template v-if="isFetching">
+        <div class="flex items-center justify-center col-span-full row-span-full">
+          <div class="i-mingcute-refresh-2-line text-zinc/50 text-7xl animate-spin"></div>
+        </div>
+      </template>
+      <template v-else>
+        <!-- 诊断详情 -->
+        <PatientDetails
+          class="col-span-5 row-span-full"
+          :name="patientInfo.name"
+          :age="patientInfo.age"
+          :gender="patientInfo.sex"
+          :stroke-level="currentDiagnosis?.stroke_level"
+          :stroke-type="currentDiagnosis?.stroke_type"
+          :date="currentDiagnosis?.diagnosis_date"
       />
+    </template>
     </div>
   </div>
 </template>
