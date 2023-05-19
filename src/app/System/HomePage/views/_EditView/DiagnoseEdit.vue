@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import type { ISystemDiagnoseItem } from '@/api/system/actions'
 
-const props = defineProps<{
+defineProps<{
   isEdit: boolean
   isLoading: boolean
   item: ISystemDiagnoseItem
-  setItem: (item: ISystemDiagnoseItem) => void
+  setItemField: (key: keyof ISystemDiagnoseItem, value: any) => void
 }>()
-
-const setItemField = (key: keyof ISystemDiagnoseItem, value: any) => {
-  props.setItem({
-    ...props.item,
-    [key]: value
-  })
-}
 </script>
 
 <template>
@@ -25,7 +18,7 @@ const setItemField = (key: keyof ISystemDiagnoseItem, value: any) => {
           type="text"
           :value="item.id"
           :disabled="isEdit"
-          @change="setItemField('id', ($event.target as HTMLInputElement).value)"
+          @change="setItemField('id', ~~($event.target as HTMLInputElement).value)"
         />
       </div>
     </div>
@@ -35,7 +28,7 @@ const setItemField = (key: keyof ISystemDiagnoseItem, value: any) => {
         <input
           type="text"
           :value="item.doctor_id"
-          @change="setItemField('doctor_id', ($event.target as HTMLInputElement).value)"
+          @change="setItemField('doctor_id', ~~($event.target as HTMLInputElement).value)"
         />
       </div>
     </div>
@@ -45,7 +38,7 @@ const setItemField = (key: keyof ISystemDiagnoseItem, value: any) => {
         <input
           type="text"
           :value="item.patient_id"
-          @change="setItemField('patient_id', ($event.target as HTMLInputElement).value)"
+          @change="setItemField('patient_id', ~~($event.target as HTMLInputElement).value)"
         />
       </div>
     </div>

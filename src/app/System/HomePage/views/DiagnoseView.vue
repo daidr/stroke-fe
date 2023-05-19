@@ -40,23 +40,23 @@ const onEditBtnClick = (item: any) => {
   let isLoading = ref(false)
   const view = h(DiagnoseEditVue, {
     item: _item,
-    setItem: (item: TItem) => {
-      _item = item
-    },
     isLoading,
     isEdit: true,
+    setItemField: (key: keyof TItem, value: any) => {
+      _item[key] = value
+    }
   })
   const onOk = async () => {
     isLoading.value = true
     const result = await Actions.update(_item.id, _item)
     if (result) {
       success('更新成功')
+      modal.component.exposed.close()
       await refreshList()
     } else {
       error('更新失败')
     }
     isLoading.value = false
-    modal.component.exposed.close()
   }
   const modal: any = createCustomModal({
     title: '编辑',
@@ -84,6 +84,41 @@ const refreshList = async () => {
   listLoading.value = false
 }
 
+const addItem = () => {
+  let _item = reactive({} as TItem)
+  let isLoading = ref(false)
+  const view = h(DiagnoseEditVue, {
+    item: _item,
+    isLoading,
+    setItemField: (key: keyof TItem, value: any) => {
+      _item[key] = value
+    }
+  })
+  const onOk = async () => {
+    isLoading.value = true
+    const result = await Actions.create(_item)
+    if (result) {
+      success('创建成功')
+      modal.component.exposed.close()
+      await refreshList()
+    } else {
+      error('创建失败')
+    }
+    isLoading.value = false
+  }
+  const modal: any = createCustomModal({
+    title: '新增',
+    isLoading: isLoading,
+    content: view,
+    autoClose: false,
+    onCancel: () => {
+      modal.component.exposed.close()
+    },
+    dynamic: true,
+    onOk
+  })
+}
+
 onMounted(() => {
   refreshList()
 })
@@ -106,8 +141,27 @@ onMounted(() => {
           { name: '编辑', func: onEditBtnClick }
         ]"
       />
+      <div class="add-btn" @click="addItem">
+        <div class="i-mingcute-add-line text-2xl"></div>
+      </div>
     </template>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.add-btn {
+  @apply fixed bottom-5 right-5 z-50 cursor-pointer transition;
+  @apply rounded-full border-2 border-zinc/50 w-12 h-12;
+  @apply flex items-center justify-center;
+  @apply bg-zinc/10;
+  @apply transform-gpu;
+
+  &:hover {
+    @apply bg-zinc/50;
+  }
+
+  &:active {
+    @apply scale-90;
+  }
+}
+</style>

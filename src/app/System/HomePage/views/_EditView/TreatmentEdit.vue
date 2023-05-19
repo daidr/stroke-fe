@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import type { ISystemTreatmentItem } from '@/api/system/actions'
 
-const props = defineProps<{
+defineProps<{
   isEdit: boolean
   isLoading: boolean
   item: ISystemTreatmentItem
-  setItem: (item: ISystemTreatmentItem) => void
+  setItemField: (key: keyof ISystemTreatmentItem, value: any) => void
 }>()
-
-const setItemField = (key: keyof ISystemTreatmentItem, value: any) => {
-  props.setItem({
-    ...props.item,
-    [key]: value
-  })
-}
 </script>
 
 <template>
@@ -25,7 +18,7 @@ const setItemField = (key: keyof ISystemTreatmentItem, value: any) => {
           type="text"
           :value="item.id"
           :disabled="isEdit"
-          @change="setItemField('id', ($event.target as HTMLInputElement).value)"
+          @change="setItemField('id', ~~($event.target as HTMLInputElement).value)"
         />
       </div>
     </div>
@@ -35,7 +28,7 @@ const setItemField = (key: keyof ISystemTreatmentItem, value: any) => {
         <input
           type="text"
           :value="item.plan_id"
-          @change="setItemField('plan_id', ($event.target as HTMLInputElement).value)"
+          @change="setItemField('plan_id', ~~($event.target as HTMLInputElement).value)"
         />
       </div>
     </div>
