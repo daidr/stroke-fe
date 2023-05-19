@@ -45,3 +45,15 @@ export const getStrokeLevelColor = (strokeLevel: number) => {
       return 'bg-gray-400'
   }
 }
+
+export const getPlanEffectionText = (effectionLevel: number) => {
+  if(effectionLevel <=20) {
+    return '轻微'
+  } else if(effectionLevel <= 70) {
+    return '一般'
+  } else if(effectionLevel <= 100) {
+    return '良好'
+  } else {
+    return '未知'
+  }
+}
