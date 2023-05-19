@@ -47,7 +47,6 @@ export const ApiPost = (path: string, data: any, timeout = 5000) => {
   return instance.post(url, data, { timeout })
 }
 
-
 const instance2 = axios.create({
   baseURL: baseUrl,
   timeout: 5000
@@ -71,7 +70,7 @@ instance2.interceptors.response.use(
   (err) => {
     if (err.response.status === 401) {
       error('未授权的操作，请尝试重新登录')
-      location.href = '/login'
+      location.href = '/admin/login'
       return Promise.reject(err)
     }
     error(err.response.statusText)
@@ -88,4 +87,14 @@ export const SystemApiGet = (path: string) => {
 export const SystemApiPost = (path: string, data: any, timeout = 5000) => {
   const url = `${path}`
   return instance2.post(url, data, { timeout })
+}
+
+export const SystemApiPut = (path: string, data: any, timeout = 5000) => {
+  const url = `${path}`
+  return instance2.put(url, data, { timeout })
+}
+
+export const SystemApiDelete = (path: string, timeout = 5000) => {
+  const url = `${path}`
+  return instance2.delete(url, { timeout })
 }
