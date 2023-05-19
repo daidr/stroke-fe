@@ -36,6 +36,11 @@ const setCurrentRecordId = (id: number) => {
   currentRecordId.value = id
 }
 
+const currentPlanId = ref(-1)
+const setCurrentPlanId = (id: number) => {
+  currentPlanId.value = id
+}
+
 const fetchInfos = async () => {
   const id = parseInt(route.params.id as string)
   const pid = parseInt(route.params.pid as string)
@@ -74,6 +79,7 @@ const fetchInfos = async () => {
     }
   }
   setCurrentRecordId(diagnosisDetails.value.records[0].id)
+  setCurrentPlanId(diagnosisDetails.value.plans[0].id)
   isFetching.value = false
 }
 
@@ -82,8 +88,6 @@ const currentDiagnosis = computed(() => {
     (item) => item.id === parseInt(route.params.id as string)
   )
 })
-
-
 
 onMounted(() => {
   fetchInfos()
@@ -108,6 +112,9 @@ onMounted(() => {
           :stroke-level="currentDiagnosis?.stroke_level"
           :stroke-type="currentDiagnosis?.stroke_type"
           :date="currentDiagnosis?.diagnosis_date"
+          :plans="plansInfo"
+          :current-plan-id="currentPlanId"
+          :set-current-plan-id="setCurrentPlanId"
         />
         <!-- 图片预览器 -->
         <ReportImageBox
@@ -123,6 +130,8 @@ onMounted(() => {
           :plans="plansInfo"
           :current-record-id="currentRecordId"
           :set-current-record-id="setCurrentRecordId"
+          :current-plan-id="currentPlanId"
+          :set-current-plan-id="setCurrentPlanId"
         />
       </template>
     </div>

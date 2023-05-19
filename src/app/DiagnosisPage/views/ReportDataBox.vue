@@ -18,6 +18,8 @@ const props = defineProps<{
   >
   currentRecordId: number
   setCurrentRecordId: (id: number) => void
+  currentPlanId: number
+  setCurrentPlanId: (id: number) => void
 }>()
 
 const currentRecord = computed(() => {
@@ -25,15 +27,18 @@ const currentRecord = computed(() => {
 })
 
 const currentPlan = computed(() => {
-  let keys = Object.keys(props.plans)
-  return props.plans[keys[0] as unknown as number]
+  return props.plans[props.currentPlanId]
 })
 </script>
 <template>
   <div class="gadget">
     <div class="title">血管参数专业分析</div>
     <div class="grid grid-cols-2 flex-grow">
-      <ReportLine :records="records" :plan="currentPlan" :set-current-record-id="setCurrentRecordId" />
+      <ReportLine
+        :records="records"
+        :plan="currentPlan"
+        :set-current-record-id="setCurrentRecordId"
+      />
       <ReportRadar
         :dim="['x%', 'y%', 'z%', 'V', 'P']"
         :selfval="[currentRecord!.main_vessel_ratio_x, currentRecord!.general_vessel_ratio_y, currentRecord!.tiny_vessel_ratio_z, currentRecord!.ischemic_area_v, currentRecord!.vessel_density_p]"

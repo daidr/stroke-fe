@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { getGenderString, getStrokeLevelString, getStrokeTypeString } from '@/utils/_'
+import {
+  getGenderString,
+  getPlanEffectionText,
+  getStrokeLevelString,
+  getStrokeTypeString
+} from '@/utils/_'
+import { computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     default: ''
@@ -25,8 +31,28 @@ defineProps({
   date: {
     type: String,
     default: ''
+  },
+  currentPlanId: {
+    type: Number,
+    default: 0
+  },
+  setCurrentPlanId: {
+    type: Function,
+    default: () => {}
+  },
+  plans: {
+    type: Object,
+    default: () => ({})
   }
 })
+
+const currentPlan = computed(() => {
+  return props.plans[props.currentPlanId]
+})
+
+const changePlan = (event: Event) => {
+  props.setCurrentPlanId(parseInt((event.target as HTMLSelectElement).value))
+}
 </script>
 
 <template>
@@ -58,8 +84,14 @@ defineProps({
     </div>
     <div class="item">
       <!-- TODO: WHAT IS THIS? -->
-      <div class="label">康复方案a：</div>
-      <div class="value">一般</div>
+      <div class="label">
+        康复方案<select class="plan-select" :value="currentPlanId" @change="changePlan">
+          <option v-for="plan of plans" :key="plan.plan.id" :value="plan.plan.id">
+            {{ plan.plan.name }}
+          </option></select
+        >：
+      </div>
+      <div class="value">{{ getPlanEffectionText(currentPlan.plan.effection) }}</div>
     </div>
   </div>
 </template>
@@ -85,8 +117,15 @@ defineProps({
     @apply flex w-full justify-between text-lg mb-2;
 
     .label {
-        @apply select-none;
+      @apply select-none;
+    }
 
+    .plan-select {
+      @apply transition-all rounded-md ml-1;
+
+      &:hover {
+        @apply ring-zinc/50 ring-2 mx-2;
+      }
     }
   }
 
