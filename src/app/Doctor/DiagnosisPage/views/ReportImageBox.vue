@@ -68,10 +68,21 @@ const onPointerMove = (e: PointerEvent, recordId: number) => {
   const imageHeight = recordImageSize[recordId][1]
   const deltaX = e.movementX
   const deltaY = e.movementY
-  const x = recordImagePos[recordId][0] + deltaX
-  const y = recordImagePos[recordId][1] + deltaY
-  if (x < padding || x > ContainerWidth - imageWidth - padding) return
-  if (y < padding || y > ContainerHeight - imageHeight - padding) return
+  let x = recordImagePos[recordId][0] + deltaX
+  let y = recordImagePos[recordId][1] + deltaY
+  if (x < padding) {
+    x = padding
+  }
+  if (x > ContainerWidth - imageWidth - padding) {
+    x = ContainerWidth - imageWidth - padding
+  }
+  if (y < padding) {
+    y = padding
+  }
+  if (y > ContainerHeight - imageHeight - padding) {
+    y = ContainerHeight - imageHeight - padding
+  }
+
   recordImagePos[recordId] = [x, y]
 }
 
