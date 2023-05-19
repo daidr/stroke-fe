@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import { useDoctorStore } from '@/stores/doctor'
+import { useSystemStore } from '@/stores/system'
 
 const doctorRouteModules = import.meta.globEager('../app/Doctor/**/routes/index.js')
 const systemRouteModules = import.meta.globEager('../app/System/**/routes/index.js')
@@ -8,21 +9,25 @@ const routes = [
   {
     path: '/',
     redirect: '/home'
+  },
+  {
+    path: '/admin',
+    redirect: '/admin/home'
   }
 ]
 
 for (const element in doctorRouteModules) {
-  const routeModule = doctorRouteModules[element]
+  const routeModule: any = doctorRouteModules[element]
   if (routeModule['routes']) {
     routes.push(...routeModule['routes'])
   }
 }
 
 for (const element in systemRouteModules) {
-  const routeModule = systemRouteModules[element]
+  const routeModule: any = systemRouteModules[element]
   if (routeModule['routes']) {
     routes.push(
-      ...routeModule['routes'].map((item) => {
+      ...routeModule['routes'].map((item: any) => {
         item.path = `/admin${item.path}`
         return item
       })
@@ -51,6 +56,14 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else if (authType === 'system') {
+    const systemStore = useSystemStore()
+    if (!systemStore.isLoggedIn) {
+      const result = await systemStore.refreshSystemInfo()
+      if (!result) {
+        next({ path: '/admin/login' })
+        return
+      }
+    }
   }
   next()
 })

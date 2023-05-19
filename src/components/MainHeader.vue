@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useDoctorStore } from '@/stores/doctor'
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { computed, ref } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import DarkModeMonitor from '@/components/DarkModeMonitor.vue'
+import { useSystemStore } from '@/stores/system'
 
 const doctorStore = useDoctorStore()
+const systemStore = useSystemStore()
 
 const isPopoverShown = ref(false)
 
@@ -20,6 +22,12 @@ const onPointerLeave = () => {
     isPopoverShown.value = false
   }, 100)
 }
+
+const route = useRoute()
+
+const isInAdmin = computed(() => {
+  return route.path.startsWith('/admin')
+})
 </script>
 
 <template>
@@ -30,45 +38,86 @@ const onPointerLeave = () => {
         <span class="logo-text">Stroke</span>
       </div>
     </RouterLink>
-
-    <div class="flex items-center space-x-2">
-      <div v-if="doctorStore.isLoggedIn" class="user-info">
-        <div class="user-popover">
-          <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
-            doctorStore.doctor.name
-          }}</span>
-          <transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="translate-y-1 opacity-0"
-            enter-to-class="translate-y-0 opacity-100"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="translate-y-0 opacity-100"
-            leave-to-class="translate-y-1 opacity-0"
-          >
-            <div
-              v-if="isPopoverShown"
-              class="user-panel"
-              @pointerenter="onPointerEnter"
-              @pointerleave="onPointerLeave"
+    <template v-if="isInAdmin">
+      <div class="flex items-center space-x-2">
+        <div v-if="systemStore.isLoggedIn" class="user-info">
+          <div class="user-popover">
+            <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
+              systemStore.system.username
+            }}</span>
+            <transition
+              enter-active-class="transition duration-200 ease-out"
+              enter-from-class="translate-y-1 opacity-0"
+              enter-to-class="translate-y-0 opacity-100"
+              leave-active-class="transition duration-150 ease-in"
+              leave-from-class="translate-y-0 opacity-100"
+              leave-to-class="translate-y-1 opacity-0"
             >
-              <div class="flex flex-col space-y-2 p-2">
-                <div>用户名：{{ doctorStore.doctor.username }}</div>
-                <div>ID：{{ doctorStore.doctor.id }}</div>
-                <RouterLink class="btn" to="/changepw">
-                  <div class="i-mingcute-key-2-line"></div>
-                  修改密码
-                </RouterLink>
-                <div class="btn" @click="doctorStore.logout">
-                  <div class="i-mingcute-align-arrow-left-line"></div>
-                  退出登录
+              <div
+                v-if="isPopoverShown"
+                class="user-panel"
+                @pointerenter="onPointerEnter"
+                @pointerleave="onPointerLeave"
+              >
+                <div class="flex flex-col space-y-2 p-2">
+                  <div>用户名：{{ systemStore.system.username }}</div>
+                  <div>Token：{{ systemStore.system.token }}</div>
+                  <RouterLink class="btn" to="/admin/changepw">
+                    <div class="i-mingcute-key-2-line"></div>
+                    修改密码
+                  </RouterLink>
+                  <div class="btn" @click="systemStore.logout">
+                    <div class="i-mingcute-align-arrow-left-line"></div>
+                    退出登录
+                  </div>
                 </div>
               </div>
-            </div>
-          </transition>
+            </transition>
+          </div>
         </div>
+        <DarkModeMonitor />
       </div>
-      <DarkModeMonitor />
-    </div>
+    </template>
+    <template v-else>
+      <div class="flex items-center space-x-2">
+        <div v-if="doctorStore.isLoggedIn" class="user-info">
+          <div class="user-popover">
+            <span @pointerenter="onPointerEnter" @pointerleave="onPointerLeave">{{
+              doctorStore.doctor.name
+            }}</span>
+            <transition
+              enter-active-class="transition duration-200 ease-out"
+              enter-from-class="translate-y-1 opacity-0"
+              enter-to-class="translate-y-0 opacity-100"
+              leave-active-class="transition duration-150 ease-in"
+              leave-from-class="translate-y-0 opacity-100"
+              leave-to-class="translate-y-1 opacity-0"
+            >
+              <div
+                v-if="isPopoverShown"
+                class="user-panel"
+                @pointerenter="onPointerEnter"
+                @pointerleave="onPointerLeave"
+              >
+                <div class="flex flex-col space-y-2 p-2">
+                  <div>用户名：{{ doctorStore.doctor.username }}</div>
+                  <div>ID：{{ doctorStore.doctor.id }}</div>
+                  <RouterLink class="btn" to="/changepw">
+                    <div class="i-mingcute-key-2-line"></div>
+                    修改密码
+                  </RouterLink>
+                  <div class="btn" @click="doctorStore.logout">
+                    <div class="i-mingcute-align-arrow-left-line"></div>
+                    退出登录
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </div>
+        </div>
+        <DarkModeMonitor />
+      </div>
+    </template>
   </header>
 </template>
 

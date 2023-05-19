@@ -52,7 +52,11 @@ const login = async () => {
     }
 
     .logo-text {
-      @apply text-4xl sm:text-5xl font-extrabold;
+      @apply text-4xl sm:text-5xl font-extrabold relative;
+      &:after {
+        content: '管理面板';
+        @apply text-sm font-light absolute right-0 -bottom-1.1em whitespace-nowrap;
+      }
     }
   }
 
