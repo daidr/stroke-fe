@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps({
@@ -162,7 +162,7 @@ const handleClose = () => {
   }
 }
 
-const onEscKeyUp = (e) => {
+const onEscKeyUp = (e: KeyboardEvent) => {
   if (e.keyCode === 27) {
     onCancelButtonClick()
   }
@@ -176,7 +176,7 @@ onUnmounted(() => {
   document.removeEventListener('keyup', onEscKeyUp)
 })
 
-const setLoadingState = (state) => {
+const setLoadingState = (state: boolean) => {
   _isLoading.value = state
 }
 
@@ -198,20 +198,24 @@ defineExpose({ close, open, setLoadingState })
             <slot>{{ content }}</slot>
           </div>
           <div v-if="!hideCancel || !hideOk" class="buttons">
-            <div v-if="!hideCancel" class="cancel-btn" :class="{ hide: _isLoading }" @click="onCancelButtonClick">
+            <div
+              v-if="!hideCancel"
+              class="cancel-btn"
+              :class="{ hide: _isLoading }"
+              @click="onCancelButtonClick"
+            >
               {{ cancelText }}
             </div>
-            <div v-if="!hideOk" class="ok-btn" :class="{ loading: _isLoading }" @click="onOkButtonClick">
-              <svg
+            <div
+              v-if="!hideOk"
+              class="ok-btn"
+              :class="{ loading: _isLoading }"
+              @click="onOkButtonClick"
+            >
+              <div
                 v-if="_isLoading"
-                class="loading"
-                xmlns="http://www.w3.org/2000/svg"
-                height="100%"
-                width="100%"
-                viewBox="0 0 120 120"
-              >
-                <circle cx="50%" cy="50%" r="50" fill="none" class="stroke-white stroke-10" />
-              </svg>
+                class="loading i-mingcute-refresh-2-line text-current animate-spin"
+              ></div>
               {{ _isLoading ? '' : okText }}
             </div>
           </div>
@@ -230,11 +234,12 @@ defineExpose({ close, open, setLoadingState })
   .modal-container {
     @apply max-h-85vh;
     @apply flex flex-col;
-    @apply fixed top-1/2 left-1/2 min-w-xs sm:min-w-sm md:max-w-3xl lg:max-w-4xl bg-primary-extralight rounded-xl p-5 transform-gpu -translate-x-1/2 -translate-y-1/2;
+    @apply fixed top-1/2 left-1/2 min-w-xs sm:min-w-sm md:max-w-3xl lg:max-w-4xl bg-white dark:bg-black rounded-xl p-5 transform-gpu -translate-x-1/2 -translate-y-1/2;
+    @apply ring-1 ring-zinc/50;
     .title {
       @apply pb-2;
       .title-default {
-        @apply text-2xl text-primary text-center;
+        @apply text-2xl text-black dark:text-white text-center;
       }
     }
 
@@ -260,7 +265,7 @@ defineExpose({ close, open, setLoadingState })
       }
 
       .cancel-btn {
-        @apply bg-gray-light bg-opacity-20 text-gray transition opacity-100 pointer-events-auto;
+        @apply bg-gray bg-opacity-20 text-gray transition opacity-100 pointer-events-auto;
 
         &:hover {
           @apply bg-opacity-30;
@@ -272,19 +277,12 @@ defineExpose({ close, open, setLoadingState })
       }
 
       .ok-btn {
-        @apply bg-primary text-white;
-
-        .loading {
-          @apply transition-all stroke-cap-round;
-          animation: loading 2s infinite;
-          circle {
-            @apply origin-center;
-            animation: loading-rotate 2s infinite;
-          }
-        }
+        @apply bg-black/60 text-white;
+        @apply flex items-center justify-center;
+        @apply dark:(bg-white/60 text-black);
 
         &:hover {
-          @apply bg-opacity-90;
+          @apply bg-black dark:bg-white;
         }
 
         &.loading {

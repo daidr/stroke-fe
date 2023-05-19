@@ -1,5 +1,5 @@
-import { h, render } from 'vue'
-import Modal from './Modal.vue'
+import { h, render, type VNode } from 'vue'
+import Modal from './CModal.vue'
 
 const createAlertModal = ({
   title = '提示',
@@ -50,8 +50,8 @@ const createPromptModal = ({
     placeholder,
     class:
       'bg-white w-full px-2 py-1 rounded-md outline-transparent transition focus:(shadow-primary-shadow shadow-xl)',
-    onInput: (e) => {
-      inputResult = e.target.value
+    onInput: (e: Event) => {
+      inputResult = (e.target as HTMLInputElement).value
     }
   })
   const vnode = h(
@@ -69,10 +69,10 @@ const createPromptModal = ({
       visible: true,
       renderToBody: false,
       onOk: () => {
-        onOk({ modal: vnode, methods: vnode.component.exposed }, inputResult)
+        ;(onOk as any)({ modal: vnode, methods: vnode.component?.exposed }, inputResult)
       },
       onCancel: () => {
-        onCancel({ modal: vnode, methods: vnode.component.exposed }, inputResult)
+        ;(onCancel as any)({ modal: vnode, methods: vnode.component?.exposed }, inputResult)
       }
     },
     {
@@ -92,6 +92,8 @@ const createCustomModal = ({
   hideCancel = false,
   centerContent = false,
   autoClose = true,
+  mask = true,
+  isLoading = false,
   onOk = () => {},
   onCancel = () => {}
 }) => {
@@ -106,14 +108,16 @@ const createCustomModal = ({
       hideCancel,
       autoClose,
       centerContent,
+      mask,
+      isLoading,
       dynamic: true,
       visible: true,
       renderToBody: false,
       onOk: () => {
-        onOk({ modal: vnode, methods: vnode.component.exposed }, content)
+        ;(onOk as any)({ modal: vnode, methods: vnode.component?.exposed }, content)
       },
       onCancel: () => {
-        onCancel({ modal: vnode, methods: vnode.component.exposed }, content)
+        ;(onCancel as any)({ modal: vnode, methods: vnode.component?.exposed }, content)
       }
     },
     {
@@ -122,18 +126,7 @@ const createCustomModal = ({
   )
   render(vnode, container)
   document.body.appendChild(container)
-}
-
-// export to window.debug if in debug mode
-if (process.env.NODE_ENV === 'development') {
-  window.debug = {
-    ...(window.debug || {}),
-    modal: {
-      createAlertModal,
-      createPromptModal,
-      createCustomModal
-    }
-  }
+  return vnode
 }
 
 export { createAlertModal, createPromptModal, createCustomModal }
