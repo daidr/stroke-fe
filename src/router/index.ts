@@ -36,19 +36,16 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   const authType = to.meta.authType
-
   if (!authType) {
-    next()
-    return
+    return true
   } else if (authType === 'doctor') {
     const doctorStore = useDoctorStore()
     if (!doctorStore.isLoggedIn) {
       const result = await doctorStore.refreshDoctorInfo()
       if (!result) {
-        next({ path: '/login' })
-        return
+        return { path: '/login', replace: true }
       }
     }
   } else if (authType === 'system') {
@@ -56,12 +53,10 @@ router.beforeEach(async (to, from, next) => {
     if (!systemStore.isLoggedIn) {
       const result = await systemStore.refreshSystemInfo()
       if (!result) {
-        next({ path: '/admin/login' })
-        return
+        return { path: '/admin/login', replace: true }
       }
     }
   }
-  next()
 })
 
 router.afterEach((to, from, failure) => {
