@@ -57,3 +57,8 @@ export const getPlanEffectionText = (effectionLevel: number) => {
     return '未知'
   }
 }
+
+export const date2String = (date: string) => {
+  const _date = new Date(date)
+  return `${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDate()}`
+}
