@@ -59,7 +59,7 @@ defineProps<{
   @apply overflow-hidden;
 
   .clist {
-    @apply overflow-y-auto;
+    @apply overflow-y-auto h-[calc(100vh-3.75rem)];
 
     table {
       @apply w-full table-auto text-left;
@@ -70,6 +70,7 @@ defineProps<{
         @apply select-none;
         @apply whitespace-nowrap;
         @apply z-1;
+        @apply backdrop-filter backdrop-blur-xl;
       }
 
       th,
@@ -83,7 +84,7 @@ defineProps<{
       }
 
       .op-btn {
-        @apply motion-safe:transition;
+        @apply transition;
         @apply cursor-pointer;
         @apply inline px-1 py-0.5;
         @apply border-transparent;

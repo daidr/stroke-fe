@@ -1,18 +1,7 @@
 <script setup lang="ts">
-import { useScroll } from '@vueuse/core'
-import { onMounted, reactive, ref } from 'vue'
-import {
-  getDoctorDiagnosisList,
-  type IDoctorDiagnosisList,
-  type IDoctorPatientItem
-} from '@/api/doctor/related'
 import { useMessage } from '@/components/Message'
-import DiagnosisItem from '@/components/DiagnosisItem.vue'
-import { getDoctorPatientById } from '@/api/doctor/related'
-import { getGenderString } from '@/utils/_'
-import { RouterLink, RouterView } from 'vue-router'
 
-const { error, success } = useMessage()
+import { RouterLink, RouterView } from 'vue-router'
 
 const menuList = [
   { path: '/diagnose', name: '诊断管理' },
