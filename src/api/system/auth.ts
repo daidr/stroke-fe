@@ -1,7 +1,7 @@
 import { SystemApiGet as ApiGet, SystemApiPost as ApiPost } from '@/utils/req'
 
 export const regSystem = async (username: string, password: string) => {
-  return await ApiPost(`/api/system/register`, {
+  return await ApiPost(`/system/register`, {
     username,
     password
   })
