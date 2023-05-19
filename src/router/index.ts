@@ -1,7 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import { useDoctorStore } from '@/stores/doctor'
 
-const routeModules = import.meta.globEager('../app/**/routes/index.js')
+const doctorRouteModules = import.meta.globEager('../app/Doctor/**/routes/index.js')
+const systemRouteModules = import.meta.globEager('../app/System/**/routes/index.js')
 
 const routes = [
   {
@@ -10,10 +11,22 @@ const routes = [
   }
 ]
 
-for (const element in routeModules) {
-  const routeModule = routeModules[element]
+for (const element in doctorRouteModules) {
+  const routeModule = doctorRouteModules[element]
   if (routeModule['routes']) {
     routes.push(...routeModule['routes'])
+  }
+}
+
+for (const element in systemRouteModules) {
+  const routeModule = systemRouteModules[element]
+  if (routeModule['routes']) {
+    routes.push(
+      ...routeModule['routes'].map((item) => {
+        item.path = `/admin${item.path}`
+        return item
+      })
+    )
   }
 }
 
@@ -37,6 +50,7 @@ router.beforeEach(async (to, from, next) => {
         return
       }
     }
+  } else if (authType === 'system') {
   }
   next()
 })
