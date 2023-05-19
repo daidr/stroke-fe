@@ -70,7 +70,7 @@ const changepw = async () => {
   @apply space-y-10;
 
   .title {
-    @apply text-3xl font-light select-none;
+    @apply text-3xl font-light select-none relative;
 
     &:after {
       content: '管理面板';
