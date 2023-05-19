@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IDoctorDiagnosisRecordItem } from '@/api/doctor/related'
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 
 const props = defineProps<{
   records: IDoctorDiagnosisRecordItem[]
@@ -157,7 +157,9 @@ const onMouseDown = (recordId: number) => {
   .label {
     @apply select-none pt-1;
     @apply text-black dark:text-white;
-    @apply filter-drop-shadow-color-white dark:filter-drop-shadow-color-black filter-drop-shadow-sm;
+    @apply filter-drop-shadow-color-white dark:filter-drop-shadow-color-black;
+    filter: drop-shadow(0 0px 2px var(--un-drop-shadow-color))
+      drop-shadow(0 0px 5px var(--un-drop-shadow-color));
   }
 }
 </style>
