@@ -31,8 +31,7 @@ const menuList = [
         <RouterLink
           v-for="menu of menuList"
           :key="menu.path"
-          class="link-item p-2 px-4 text-xl font-light"
-          :class="{ active: menu.path }"
+          class="link-item"
           :to="`/admin${menu.path}`"
         >
           {{ menu.name }}
@@ -49,6 +48,19 @@ const menuList = [
 .home-wrapper {
   @apply fixed top-15 left-0 right-0 bottom-0;
   @apply flex justify-center;
+
+  .link-item {
+    @apply p-2 px-4 text-xl font-light;
+    @apply cursor-pointer select-none;
+
+    &:hover {
+      @apply bg-zinc/10;
+    }
+
+    &.router-link-exact-active {
+      @apply bg-zinc/20 pointer-events-none;
+    }
+  }
 
   .refresh-btn {
     @apply cursor-pointer ml-2;

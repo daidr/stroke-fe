@@ -29,8 +29,8 @@ export const routes = [
         component: () => import('../views/PlanView.vue')
       },
       {
-        path: 'report',
-        component: () => import('../views/ReportView.vue')
+        path: 'record',
+        component: () => import('../views/RecordView.vue')
       },
       {
         path: 'treatment',

@@ -14,7 +14,7 @@ const login = async () => {
   const token = await getSystemJWT(username.value, password.value)
   if (token) {
     setToken('system', token)
-    router.push('/admin/home')
+    router.push('/admin/')
   }
   isLoading.value = false
 }
