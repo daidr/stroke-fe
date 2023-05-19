@@ -11,7 +11,6 @@ const props = defineProps<{
   dim: string[]
   selfval: number[]
 }>()
-
 use([CanvasRenderer, RadarChart, TitleComponent, TooltipComponent])
 
 const option = computed(() => {
@@ -84,23 +83,23 @@ const option = computed(() => {
       <div class="h-2em"></div>
       <div class="item">
         <div class="label">主血管比例x%:</div>
-        <square-progress :progress="selfval[0]/100" />
+        <square-progress :progress="selfval[0]/10" />
       </div>
       <div class="item">
         <div class="label">一般血管比例y%:</div>
-        <square-progress :progress="selfval[1]/100" />
+        <square-progress :progress="selfval[1]/10" />
       </div>
       <div class="item">
         <div class="label">毛细血管比例z%:</div>
-        <square-progress :progress="selfval[2]/100" />
+        <square-progress :progress="selfval[2]/10" />
       </div>
       <div class="item">
         <div class="label">缺血区域体积V:</div>
-        <square-progress :progress="selfval[3]/100" />
+        <square-progress :progress="selfval[3]/10" />
       </div>
       <div class="item">
         <div class="label">血管密度P:</div>
-        <square-progress :progress="selfval[4]/100" />
+        <square-progress :progress="selfval[4]/10" />
       </div>
 
       <div class="text-sm text-zinc/40 text-right select-none">备注：0-9代表血管参数恢复程度</div>
