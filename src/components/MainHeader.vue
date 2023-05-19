@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import DarkModeMonitor from '@/components/DarkModeMonitor.vue'
 import { useSystemStore } from '@/stores/system'
+import { useMessage } from './Message'
 
 const doctorStore = useDoctorStore()
 const systemStore = useSystemStore()
@@ -24,20 +25,47 @@ const onPointerLeave = () => {
 }
 
 const route = useRoute()
+const { success, error } = useMessage()
 
 const isInAdmin = computed(() => {
   return route.path.startsWith('/admin')
 })
+
+const copyString = (str: string) => {
+  if (!navigator.clipboard) {
+    error('浏览器不支持复制')
+    return
+  }
+  navigator.clipboard.writeText(str)
+  success('复制成功')
+}
+
+const stringEllipsis = (str: string, length: number) => {
+  // 长于 20个字符，在中间截断，用...代替
+  if (str.length > length) {
+    return str.slice(0, length / 2) + '...' + str.slice(-length / 2)
+  }
+}
 </script>
 
 <template>
   <header>
-    <RouterLink to="/" class="decoration-none">
-      <div class="logo-with-text">
-        <div class="logo"></div>
-        <span class="logo-text">Stroke</span>
-      </div>
-    </RouterLink>
+    <template v-if="isInAdmin">
+      <RouterLink to="/admin" class="decoration-none">
+        <div class="logo-with-text">
+          <div class="logo"></div>
+          <span class="logo-text">Stroke 管理面板</span>
+        </div>
+      </RouterLink>
+    </template>
+    <template v-else>
+      <RouterLink to="/" class="decoration-none">
+        <div class="logo-with-text">
+          <div class="logo"></div>
+          <span class="logo-text">Stroke</span>
+        </div>
+      </RouterLink>
+    </template>
     <template v-if="isInAdmin">
       <div class="flex items-center space-x-2">
         <div v-if="systemStore.isLoggedIn" class="user-info">
@@ -61,7 +89,19 @@ const isInAdmin = computed(() => {
               >
                 <div class="flex flex-col space-y-2 p-2">
                   <div>用户名：{{ systemStore.system.username }}</div>
-                  <div>Token：{{ systemStore.system.token }}</div>
+                  <div class="flex items-center">
+                    Token：{{ stringEllipsis(systemStore.system.token, 10) }}
+                    <div
+                      class="copy-btn"
+                      @click="
+                        () => {
+                          copyString(systemStore.system.token)
+                        }
+                      "
+                    >
+                      <div class="i-mingcute-copy-fill"></div>
+                    </div>
+                  </div>
                   <RouterLink class="btn" to="/admin/changepw">
                     <div class="i-mingcute-key-2-line"></div>
                     修改密码
@@ -125,6 +165,18 @@ const isInAdmin = computed(() => {
 header {
   @apply w-full h-15 ring-1 ring-zinc/30;
   @apply flex items-center px-5 justify-between;
+
+  .copy-btn {
+    @apply ml-1 p-1 cursor-pointer rounded text-black/50 dark:text-white/50;
+
+    &:hover {
+      @apply bg-zinc/20;
+    }
+
+    &:active {
+      @apply bg-zinc/30;
+    }
+  }
 
   .logo-with-text {
     @apply flex items-center space-x-2 select-none text-black dark:text-white;
