@@ -40,7 +40,11 @@ const onEditBtnClick = (item: any) => {
   let isLoading = ref(false)
   const view = h(DiagnoseEditVue, {
     item: _item,
-    isLoading
+    setItem: (item: TItem) => {
+      _item = item
+    },
+    isLoading,
+    isEdit: true,
   })
   const onOk = async () => {
     isLoading.value = true
