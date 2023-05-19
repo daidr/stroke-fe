@@ -9,10 +9,6 @@ const routes = [
   {
     path: '/',
     redirect: '/home'
-  },
-  {
-    path: '/admin',
-    redirect: '/admin/home'
   }
 ]
 
