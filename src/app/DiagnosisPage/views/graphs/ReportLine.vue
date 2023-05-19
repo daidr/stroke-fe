@@ -41,7 +41,10 @@ const getDateString = (date: string) => {
 const option = computed(() => {
   return {
     legend: {
-      top: 'top'
+      top: 'top',
+      textStyle: {
+        color: '#6e7079'
+      }
     },
     tooltip: {
       triggerOn: 'none',
@@ -62,17 +65,18 @@ const option = computed(() => {
           show: true,
           formatter: function (params: any) {
             // setCurrentRecordId
-            if(params.seriesData && params.seriesData[0] && params.seriesData[0].data) {
+            if (params.seriesData && params.seriesData[0] && params.seriesData[0].data) {
               props.setCurrentRecordId(params.seriesData[0].data.value[2].id)
             }
-            
+
             return format.formatTime('yyyy-MM-dd', params.value)
           },
-          backgroundColor: '#a9a9ab'
+          backgroundColor: '#4b4b4faa',
         },
         handle: {
           show: true,
-          color: '#a9a9ab'
+          color: '#4b4b4f',
+          opacity: 0.5
         }
       },
       splitLine: {
