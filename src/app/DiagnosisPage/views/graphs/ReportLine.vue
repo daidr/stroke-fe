@@ -128,7 +128,7 @@ const option = computed(() => {
     ],
     series: [
       {
-        name: '缺血区域V(理想恢复情况)',
+        name: '缺血区域V(实际恢复情况)',
         type: 'line',
         symbol: 'circle',
         symbolSize: 5,
@@ -157,7 +157,7 @@ const option = computed(() => {
         })
       },
       {
-        name: '血管密度P(理想恢复情况)',
+        name: '血管密度P(实际恢复情况)',
         type: 'line',
         symbol: 'triangle',
         symbolSize: 5,
