@@ -26,7 +26,7 @@ const changepw = async () => {
 
   const result = await changeSystemUserPassword(oldPassword.value, newPassword.value)
   if (result) {
-    router.push('/home')
+    router.push('/admin/home')
     success('密码修改成功')
   }
   isLoading.value = false
