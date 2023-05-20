@@ -95,8 +95,39 @@ const createCustomModal = ({
   mask = true,
   isLoading = false,
   onOk = () => {},
-  onCancel = () => {}
-}) => {
+  onCancel = () => {},
+  dynamic = false
+}:
+  | {
+      dynamic: true
+      onOk?: () => void
+      onCancel?: () => void
+      title?: any
+      content?: any
+      okText?: any
+      cancelText?: any
+      hideOk?: any
+      hideCancel?: any
+      centerContent?: any
+      autoClose?: any
+      mask?: any
+      isLoading?: any
+    }
+  | {
+      dynamic: false
+      onOk?: () => void
+      onCancel?: () => void
+      title?: string
+      content?: string
+      okText?: string
+      cancelText?: string
+      hideOk?: boolean
+      hideCancel?: boolean
+      centerContent?: boolean
+      autoClose?: boolean
+      mask?: boolean
+      isLoading?: boolean
+    }) => {
   const container = document.createElement('div')
   const vnode = h(
     Modal,
@@ -110,7 +141,7 @@ const createCustomModal = ({
       centerContent,
       mask,
       isLoading,
-      dynamic: true,
+      dynamic,
       visible: true,
       renderToBody: false,
       onOk: () => {
