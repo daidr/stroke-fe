@@ -5,6 +5,7 @@ import { useMessage } from '@/components/Message'
 import { h, onMounted, reactive, ref } from 'vue'
 import { createCustomModal } from '@/components/Modal'
 import DiagnoseEditVue from './_EditView/DiagnoseEdit.vue'
+import { getStrokeLevelString, getStrokeTypeString } from '@/utils/_'
 
 type TItem = ISystemDiagnoseItem
 const Actions = Diagnose
@@ -14,8 +15,16 @@ const colMap = [
   { name: '医生 (doctor_id)', key: 'doctor_id' },
   { name: '患者ID (patient_id)', key: 'patient_id' },
   { name: '诊断时间 (diagnosis_date)', key: 'diagnosis_date' },
-  { name: '脑卒中类型 (stroke_type)', key: 'stroke_type' },
-  { name: '脑卒中程度 (stroke_level)', key: 'stroke_level' }
+  {
+    name: '脑卒中类型 (stroke_type)',
+    key: 'stroke_type',
+    func: (value: any) => `${value} (${getStrokeTypeString(value)})`
+  },
+  {
+    name: '脑卒中程度 (stroke_level)',
+    key: 'stroke_level',
+    func: (value: any) => `${value} (${getStrokeLevelString(value)})`
+  }
 ]
 
 const listLoading = ref(true)

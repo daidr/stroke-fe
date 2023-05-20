@@ -62,3 +62,10 @@ export const date2String = (date: string) => {
   const _date = new Date(date)
   return `${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDate()}`
 }
+
+export const stringEllipsis = (str: string, length: number) => {
+  // 长于 20个字符，在中间截断，用...代替
+  if (str.length > length) {
+    return str.slice(0, length / 2) + '...' + str.slice(-length / 2)
+  }
+}

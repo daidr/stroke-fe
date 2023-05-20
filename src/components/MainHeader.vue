@@ -5,6 +5,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import DarkModeMonitor from '@/components/DarkModeMonitor.vue'
 import { useSystemStore } from '@/stores/system'
 import { useMessage } from './Message'
+import { stringEllipsis } from '@/utils/_'
 
 const doctorStore = useDoctorStore()
 const systemStore = useSystemStore()
@@ -38,13 +39,6 @@ const copyString = (str: string) => {
   }
   navigator.clipboard.writeText(str)
   success('复制成功')
-}
-
-const stringEllipsis = (str: string, length: number) => {
-  // 长于 20个字符，在中间截断，用...代替
-  if (str.length > length) {
-    return str.slice(0, length / 2) + '...' + str.slice(-length / 2)
-  }
 }
 </script>
 

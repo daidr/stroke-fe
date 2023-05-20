@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useMessage } from '@/components/Message'
 
 import { RouterLink, RouterView } from 'vue-router'
 
@@ -7,7 +6,7 @@ const menuList = [
   { path: '/diagnose', name: '诊断管理' },
   { path: '/patient', name: '患者管理' },
   { path: '/doctor', name: '医生管理' },
-  { path: '/record', name: '病历管理' },
+  { path: '/record', name: '记录管理' },
   { path: '/plan', name: '方案管理' },
   { path: '/treatment', name: '治疗管理' }
 ]
@@ -65,10 +64,10 @@ const menuList = [
   }
 
   .split-view {
-    @apply flex h-full max-w-1400px w-full;
+    @apply flex h-full max-w-1500px w-full;
 
     .left {
-      @apply border-zinc/50 border-l-1 border-l-solid w-160px h-full;
+      @apply border-zinc/50 border-l-1 border-l-solid w-160px h-full flex-shrink-0;
     }
     .right {
       @apply border-zinc/50 border-l-1 border-l-solid border-r-1 border-r-solid flex-grow h-full;

@@ -79,7 +79,7 @@ export interface ISystemDoctorItem {
 
 export const Doctor = {
   list: async () => {
-    return await ApiGet(`/system/doctor`)
+    return await ApiGet(`/system/doctors`)
       .then((res) => {
         return res.data as ISystemDoctorItem[]
       })
@@ -89,7 +89,7 @@ export const Doctor = {
       })
   },
   get: async (id: number) => {
-    return await ApiGet(`/system/doctor/${id}`)
+    return await ApiGet(`/system/doctors/${id}`)
       .then((res) => {
         return res.data as ISystemDoctorItem
       })
@@ -99,7 +99,7 @@ export const Doctor = {
       })
   },
   create: async (data: ISystemDoctorItem) => {
-    return await ApiPost(`/system/doctor`, data)
+    return await ApiPost(`/system/doctors`, data)
       .then((res) => {
         return res.data as ISystemDoctorItem
       })
@@ -109,7 +109,7 @@ export const Doctor = {
       })
   },
   update: async (id: number, data: ISystemDoctorItem) => {
-    return await ApiPut(`/system/doctor/${id}`, data)
+    return await ApiPut(`/system/doctors/${id}`, data)
       .then((res) => {
         return res.data as ISystemDoctorItem
       })
@@ -119,7 +119,7 @@ export const Doctor = {
       })
   },
   delete: async (id: number) => {
-    return await ApiDelete(`/system/doctor/${id}`)
+    return await ApiDelete(`/system/doctors/${id}`)
       .then((res) => {
         return res.data as ISystemDoctorItem
       })
